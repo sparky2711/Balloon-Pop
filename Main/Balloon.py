@@ -19,8 +19,8 @@ clock = pygame.time.Clock()
 
 # Set Webcam Dimensions
 cap = cv2.VideoCapture(0)
-cap.set(3, 1280)
-cap.set(4, 720)
+cap.set(3, width)
+cap.set(4, height)
 
 # Load Balloon Image
 imgBalloon = pygame.image.load('../Resources/BalloonRed.png').convert_alpha()
@@ -34,7 +34,7 @@ score = 0
 name = ""
 
 # Initialize Hand Detector
-detector = HandDetector(detectionCon=0.8, maxHands=2)
+detector = HandDetector(detectionCon=0.8, maxHands=1)
 
 # Function to Reset Balloon Position
 def resetBalloon():
@@ -112,7 +112,7 @@ while True:
 
         if hands:
             hand = hands[0]
-            x, y = hand['lmList'][8]
+            x, y, z = hand['lmList'][8]
             if rectBalloon.collidepoint(x, y):
                 resetBalloon()
                 score += 10
@@ -134,8 +134,3 @@ while True:
     pygame.display.update()
     # Set FPS
     clock.tick(fps)
-
-
-
-
-
