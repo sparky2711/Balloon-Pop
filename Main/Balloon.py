@@ -66,6 +66,9 @@ name = ""
 # Initialize Hand Detector
 detector = HandDetector(detectionCon=0.8, maxHands=1)
 
+# Balloon pop sound
+popSound = pygame.mixer.Sound('../Resources/pop.wav')
+
 # Show Start Page
 imgBackground = pygame.image.load('../Resources/Project - GUI/background.png').convert()
 showStartPage = True
@@ -119,7 +122,6 @@ while True:
             pygame.quit()
             quit()
 
-
     # Apply Logic
     timeRemain = int(totalTime - (time.time() - startTime))
     if timeRemain < 0:
@@ -149,6 +151,7 @@ while True:
             x, y, z = hand['lmList'][8]
             if balloon.rect.collidepoint(x, y):
                 score += balloon.points
+                popSound.play()
                 streamSpeed += 1
                 balloon = randomBalloon(balloonList)
                 balloon.randomizeLocation(img)
