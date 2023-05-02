@@ -23,6 +23,7 @@ cap.set(3, 1280)
 cap.set(4, 720)
 
 # Load Balloon Image
+popSound = pygame.mixer.Sound('../Resources/pop.wav')
 imgBalloon = pygame.image.load('../Resources/BalloonRed.png').convert_alpha()
 imgBackground = pygame.image.load('../Resources/Project - GUI/background.png').convert()
 rectBalloon = imgBalloon.get_rect()
@@ -78,7 +79,7 @@ while showStartPage:
                 showStartPage = False
 
 startTime = time.time()
-totalTime = 60
+totalTime = 20
 # Main Game Loop
 while True:
     # Get Events
@@ -117,6 +118,7 @@ while True:
                 resetBalloon()
                 score += 10
                 speed += 1
+                popSound.play()
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         imgRGB = np.rot90(imgRGB)
         frame = pygame.surfarray.make_surface(imgRGB).convert()

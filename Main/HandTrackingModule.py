@@ -4,20 +4,7 @@ import math
 
 
 class HandDetector:
-    """
-    Finds Hands using the mediapipe library. Exports the landmarks
-    in pixel format. Adds extra functionalities like finding how
-    many fingers are up or the distance between two fingers. Also
-    provides bounding box info of the hand found.
-    """
-
     def __init__(self, mode=False, maxHands=2, detectionCon=0.5, minTrackCon=0.5):
-        """
-        :param mode: In static mode, detection is done on each image: slower
-        :param maxHands: Maximum number of hands to detect
-        :param detectionCon: Minimum Detection Confidence Threshold
-        :param minTrackCon: Minimum Tracking Confidence Threshold
-        """
         self.mode = mode
         self.maxHands = maxHands
         self.detectionCon = detectionCon
@@ -33,12 +20,6 @@ class HandDetector:
         self.lmList = []
 
     def findHands(self, img, draw=True, flipType=True):
-        """
-        Finds hands in a BGR image.
-        :param img: Image to find the hands in.
-        :param draw: Flag to draw the output on the image.
-        :return: Image with or without drawings
-        """
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.hands.process(imgRGB)
         allHands = []
@@ -92,11 +73,6 @@ class HandDetector:
             return allHands
 
     def fingersUp(self, myHand):
-        """
-        Finds how many fingers are open and returns in a list.
-        Considers left and right hands separately
-        :return: List of which fingers are up
-        """
         myHandType = myHand["type"]
         myLmList = myHand["lmList"]
         if self.results.multi_hand_landmarks:
@@ -122,17 +98,6 @@ class HandDetector:
         return fingers
 
     def findDistance(self, p1, p2, img=None):
-        """
-        Find the distance between two landmarks based on their
-        index numbers.
-        :param p1: Point1
-        :param p2: Point2
-        :param img: Image to draw on.
-        :param draw: Flag to draw the output on the image.
-        :return: Distance between the points
-                 Image with output drawn
-                 Line information
-        """
 
         x1, y1 = p1
         x2, y2 = p2
